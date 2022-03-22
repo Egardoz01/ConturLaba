@@ -8,6 +8,12 @@ namespace ConturLaba
 {
     public enum MaskType
     {
-        HorizontalLineMask
+        HorizontalLineMask,
+        VerticalLineMask,
+        DiagonalMask_1,
+        DiagonalMask_2,
+        Gradient_1,
+        Gradient_2,
+        Gradient_3
     }
 }

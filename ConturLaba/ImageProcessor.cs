@@ -26,18 +26,16 @@ namespace ConturLaba
                 for (int j = 1; j < image.Width - 1; j++)
                 {
                     int r = 0, g = 0, b = 0;
-                    Color[,] pixels = new Color[3, 3];
 
                     for (int k = 0; k < mask.GetLength(0); k++)
                         for (int l = 0; l < mask.GetLength(1); l++)
                         {
                             int x = j - 1 + l;
                             int y = i - 1 + k;
-                            pixels[k, l] = matrix[y, x];
 
-                            r += mask[k, l] * pixels[k, l].R;
-                            g += mask[k, l] * pixels[k, l].G;
-                            b += mask[k, l] * pixels[k, l].B;
+                            r += mask[k, l] * matrix[y, x].R;
+                            g += mask[k, l] * matrix[y, x].G;
+                            b += mask[k, l] * matrix[y, x].B;
                         }
 
 
@@ -63,7 +61,18 @@ namespace ConturLaba
             {
                 case MaskType.HorizontalLineMask:
                     return HotizontalLineMask;
-
+                case MaskType.VerticalLineMask:
+                    return VerticalLineMask;
+                case MaskType.DiagonalMask_1:
+                    return DiagonalLineMask_1;
+                case MaskType.DiagonalMask_2:
+                    return DiagonalLineMask_2;
+                case MaskType.Gradient_1:
+                    return Gradient_1;
+                case MaskType.Gradient_2:
+                    return Gradient_2;
+                case MaskType.Gradient_3:
+                    return Gradient_3;
                 default:
                     return null;
             }
@@ -74,6 +83,42 @@ namespace ConturLaba
             { -1, -1, -1 },
             { 2, 2, 2 },
             { -1, -1, -1 }
+        };
+
+        private static int[,] VerticalLineMask = new int[,] {
+            { -1, 2, -1 },
+            { -1, 2, -1 },
+            { -1, 2, -1 }
+        };
+
+        private static int[,] DiagonalLineMask_1 = new int[,] {
+            { 2, -1, -1 },
+            { -1, 2, -1 },
+            { -1, -1, 2 }
+        };
+
+        private static int[,] DiagonalLineMask_2 = new int[,] {
+            { -1, -1, 2 },
+            { -1, 2, -1 },
+            { 2, -1, -1 }
+        };
+
+        private static int[,] Gradient_1 = new int[,] {
+            { 1, 1, 1 },
+            { 1, -2, 1 },
+            { -1, -1, -1 }
+        };
+
+        private static int[,] Gradient_2 = new int[,] {
+            { 1, 1, 1 },
+            { -1, -2, 1 },
+            { -1, -1, 1 }
+        };
+
+        private static int[,] Gradient_3 = new int[,] {
+            { -1, 1, 1 },
+            { -1, -2, 1 },
+            { -1, 1, 1 }
         };
 
     }

@@ -32,8 +32,16 @@ namespace ConturLaba
 
         private void btnApplyMask_Click(object sender, EventArgs e)
         {
-            image = ImageProcessor.ApplyMask(image, MaskType.HorizontalLineMask);
+            MaskType mask;
+            Enum.TryParse<MaskType>(cmbMask.SelectedValue.ToString(), out mask);
+
+            image = ImageProcessor.ApplyMask(image, mask);
             pictureBox.Image = image;
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            cmbMask.DataSource = Enum.GetValues(typeof(MaskType));
         }
     }
 }
