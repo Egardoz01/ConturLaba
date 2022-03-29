@@ -14,6 +14,7 @@ namespace ConturLaba
     {
 
         private Bitmap image;
+        private Bitmap originalImage;
         public MainForm()
         {
             InitializeComponent();
@@ -25,7 +26,8 @@ namespace ConturLaba
             open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp; *.pcx)|*.jpg; *.jpeg; *.gif; *.bmp; *.pcx";
             if (open.ShowDialog() == DialogResult.OK)
             {
-                image = new Bitmap(open.FileName);
+                originalImage = new Bitmap(open.FileName);
+                image = (Bitmap)originalImage.Clone();
                 pictureBox.Image = image;
             }
         }
@@ -42,6 +44,12 @@ namespace ConturLaba
         private void MainForm_Load(object sender, EventArgs e)
         {
             cmbMask.DataSource = Enum.GetValues(typeof(MaskType));
+        }
+
+        private void btnBackToOriginal_Click(object sender, EventArgs e)
+        {
+            image = (Bitmap)originalImage.Clone();
+            pictureBox.Image = image;
         }
     }
 }
