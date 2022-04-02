@@ -10,7 +10,7 @@ namespace ConturLaba
     public static class LinearEdgeDetection
     {
 
-        public static Bitmap Process(Bitmap image, int[,] mask)
+        public static Bitmap Process(Bitmap image, int[,,] masks)
         {
 
             Color[,] matrix = new Color[image.Height, image.Width];
@@ -25,21 +25,30 @@ namespace ConturLaba
             for (int i = 1; i < image.Height - 1; i++)
                 for (int j = 1; j < image.Width - 1; j++)
                 {
-                    int r = 0, g = 0, b = 0;
-
-                    for (int k = 0; k < mask.GetLength(0); k++)
-                        for (int l = 0; l < mask.GetLength(1); l++)
-                        {
-                            int x = j - 1 + l;
-                            int y = i - 1 + k;
-
-                            r += mask[k, l] * matrix[y, x].R;
-                            g += mask[k, l] * matrix[y, x].G;
-                            b += mask[k, l] * matrix[y, x].B;
-                        }
 
 
-                    image.SetPixel(j, i, Color.FromArgb(255, GetValue(r), GetValue(g), GetValue(b)));
+                    int mx_aber = 0;
+                    for (int p = 0; p < masks.GetLength(0); p++)
+                    {
+                        int r = 0, g = 0, b = 0;
+                        int aver = 0;
+                        for (int k = 0; k < masks.GetLength(1); k++)
+                            for (int l = 0; l < masks.GetLength(2); l++)
+                            {
+                                int x = j - 1 + l;
+                                int y = i - 1 + k;
+
+                                r += masks[p, k, l] * matrix[y, x].R;
+                                g += masks[p, k, l] * matrix[y, x].G;
+                                b += masks[p, k, l] * matrix[y, x].B;
+                            }
+
+                        aver = (r + g + b) / 3;
+                        mx_aber = Math.Max(aver, mx_aber);
+                    }
+
+
+                    image.SetPixel(j, i, Color.FromArgb(255, GetValue(mx_aber), GetValue(mx_aber), GetValue(mx_aber)));
                 }
 
             return image;

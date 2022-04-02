@@ -9,16 +9,21 @@ namespace ConturLaba
             if (algo >= AlgoType.HorizontalLineMask && algo <= AlgoType.Laplass_3)
                 return LinearEdgeDetection.Process(image, GetMaskForLinearAlgo(algo));
 
-            if (algo >= AlgoType.Previt)
+            if (algo >= AlgoType.Previt && algo < AlgoType.Kirsh)
             {
                 var masks = GetMasksForNonLinearAlgo(algo);
                 return SobelEdgeDetection.Process(image, masks.Item1, masks.Item2);
             }
 
+            if (algo == AlgoType.Kirsh)
+            {
+                return LinearEdgeDetection.Process(image, Kirsh);
+            }
+
             return null;
         }
 
-        private static int[,] GetMaskForLinearAlgo(AlgoType algo)
+        private static int[,,] GetMaskForLinearAlgo(AlgoType algo)
         {
             switch (algo)
             {
@@ -97,94 +102,124 @@ namespace ConturLaba
         }
 
 
-        private static int[,] HotizontalLineMask = new int[,] {
+        private static int[,,] HotizontalLineMask = new int[,,] {
+            {
             { -1, -1, -1 },
             { 2, 2, 2 },
             { -1, -1, -1 }
+        }
         };
 
-        private static int[,] VerticalLineMask = new int[,] {
+        private static int[,,] VerticalLineMask = new int[,,] {
+            {
             { -1, 2, -1 },
             { -1, 2, -1 },
             { -1, 2, -1 }
+            }
         };
 
-        private static int[,] DiagonalLineMask_1 = new int[,] {
+        private static int[,,] DiagonalLineMask_1 = new int[,,] {
+            {
             { 2, -1, -1 },
             { -1, 2, -1 },
             { -1, -1, 2 }
+                }
         };
 
-        private static int[,] DiagonalLineMask_2 = new int[,] {
+        private static int[,,] DiagonalLineMask_2 = new int[,,] {
+            {
             { -1, -1, 2 },
             { -1, 2, -1 },
             { 2, -1, -1 }
+                }
         };
 
-        private static int[,] Gradient_1 = new int[,] {
+        private static int[,,] Gradient_1 = new int[,,] {
+            {
             { 1, 1, 1 },
             { 1, -2, 1 },
             { -1, -1, -1 }
+                 }
         };
 
-        private static int[,] Gradient_2 = new int[,] {
+        private static int[,,] Gradient_2 = new int[,,] {
+            {
             { 1, 1, 1 },
             { -1, -2, 1 },
             { -1, -1, 1 }
+                }
         };
 
-        private static int[,] Gradient_3 = new int[,] {
+        private static int[,,] Gradient_3 = new int[,,] {
+            {
             { -1, 1, 1 },
             { -1, -2, 1 },
             { -1, 1, 1 }
+                 }
         };
 
-        private static int[,] Gradient_4 = new int[,] {
+        private static int[,,] Gradient_4 = new int[,,] {
+            {
             { -1, -1, 1 },
             { -1, -2, 1 },
             { 1, 1, 1 }
+                 }
         };
 
-        private static int[,] Gradient_5 = new int[,] {
+        private static int[,,] Gradient_5 = new int[,,] {
+            {
             { -1, -1, -1 },
             { 1, -2, 1 },
             { 1, 1, 1 }
+                 }
         };
 
-        private static int[,] Gradient_6 = new int[,] {
+        private static int[,,] Gradient_6 = new int[,,] {
+            {
             { 1, -1, -1 },
             { 1, -2, -1 },
             { 1, 1, 1 }
+                 }
         };
 
-        private static int[,] Gradient_7 = new int[,] {
+        private static int[,,] Gradient_7 = new int[,,] {
+            {
             { 1, 1, -1 },
             { 1, -2, -1 },
             { 1, 1, -1 }
+                 }
         };
 
-        private static int[,] Gradient_8 = new int[,] {
+        private static int[,,] Gradient_8 = new int[,,] {
+            {
             { 1, 1, 1 },
             { 1, -2, -1 },
             { 1, -1, -1 }
+                 }
         };
 
-        private static int[,] Laplass_1 = new int[,] {
+        private static int[,,] Laplass_1 = new int[,,] {
+            {
             { 0, -1, 0 },
             { -1, 4, -1 },
             { 0, -1, 0 }
+                 }
         };
 
-        private static int[,] Laplass_2 = new int[,] {
+        private static int[,,] Laplass_2 = new int[,,] {
+            {
             { -1, -1, -1 },
             { -1, 8, -1 },
             { -1, -1, -1 }
+                 }
         };
 
-        private static int[,] Laplass_3 = new int[,] {
+        private static int[,,] Laplass_3 = new int[,,] {
+            {
             { 1, -2, 1 },
             { -2, 4, -2 },
             { 1, -2, 1 }
+                 }
         };
 
         private static int[,] Previt_1 = new int[,] {
@@ -246,6 +281,51 @@ namespace ConturLaba
         private static int[,] Roberts_2 = new int[,] {
             { 0, 1 },
             { -1, 0},
+        };
+
+
+        private static int[,,] Kirsh = new int[,,] {
+            {
+                { 5, 5, 5 },
+                { -3, 0, -3 },
+                { -3, -3, -3 }
+            },
+             {
+                { -3, 5, 5 },
+                { -3, 0, 5 },
+                { -3, -3, -3 }
+            },
+              {
+                { -3, -3, 5 },
+                { -3, 0, 5 },
+                { -3, -3, 5 }
+            },
+               {
+                { -3, -3, -3 },
+                { -3, 0, 5 },
+                { -3, 5, 5 }
+            },
+               {
+                { -3, -3, -3 },
+                { -3, 0, -3 },
+                { 5, 5, 5 }
+            },
+                {
+                { -3, -3, -3 },
+                { 5, 0, -3 },
+                { 5, 5, -3 }
+            },
+                 {
+                { 5, -3, -3 },
+                { 5, 0, -3 },
+                { 5, -3, -3 }
+            },
+                 {
+                { 5, 5, -3 },
+                { 5, 0, -3 },
+                { -3, -3, -3 }
+            }
+
         };
     }
 }

@@ -21,6 +21,7 @@
         Sobel_1,
         Sobel_2,
         Sobel_3,
-        Roberts
+        Roberts,
+        Kirsh
     }
 }
