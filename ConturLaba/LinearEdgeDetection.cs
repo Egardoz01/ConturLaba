@@ -43,7 +43,7 @@ namespace ConturLaba
                                 b += masks[p, k, l] * matrix[y, x].B;
                             }
 
-                        aver = (r + g + b) / 3;
+                        aver = Math.Abs(r + g + b) / 3;
                         mx_aber = Math.Max(aver, mx_aber);
                     }
 

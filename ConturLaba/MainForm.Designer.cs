@@ -62,7 +62,7 @@
             this.btnApplyMask.Name = "btnApplyMask";
             this.btnApplyMask.Size = new System.Drawing.Size(113, 34);
             this.btnApplyMask.TabIndex = 2;
-            this.btnApplyMask.Text = "Apply mask";
+            this.btnApplyMask.Text = "Apply";
             this.btnApplyMask.UseVisualStyleBackColor = true;
             this.btnApplyMask.Click += new System.EventHandler(this.btnApplyMask_Click);
             // 
